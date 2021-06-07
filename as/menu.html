@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: aliceblue;
+        }
+        .nav h1{
+            margin: 25px;
+        }
+        .list{
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+        }
+        .list li{
+            margin: 15px;
+            cursor: pointer;
+        }
+        .foodlist{
+            display: flex;
+            width: 50vw;
+            margin: 100px auto;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .foodbox{
+            margin: 20px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px 0 rgba(0,0,0,1);
+            text-transform: uppercase;
+
+        }
+        .foodbox img{
+            width: 100%;
+        }
+        .foodbox p{
+            margin: 15px;
+        
+        }
+       
+        .foodbox button{
+            width: 100%;
+            padding: 10px 0;
+            color: black;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 255, 0.555);
+            font-size: large;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Food*Food</h1>
+        <ul class="list">
+            <li onclick="menu()">Menu</li>
+            <li onclick="login()">Login</li>
+            <li onclick="signup()">Signup</li>
+            <li onclick="cart()">cart</li>
+        </ul>
+    </div>
+    <div class="foodlist" id="store"></div>
+</body>
+</html>
+<script>
+  function menu(){
+      window.location.href = './menu.html'
+  }
+  function login(){
+      window.location.href = './login.html'
+  }
+  function signup(){
+      window.location.href = './signup.html'
+  }
+
+  let food = [{description:'kajupaneer',Image:'https://static.toiimg.com/thumb/69038542.cms?imgsize=563452&width=800&height=800',preptime:'25 minutes',price:'500'},
+              {description:'shahipaneer',Image:'https://static.toiimg.com/thumb/69038542.cms?imgsize=563452&width=800&height=800',preptime:'30 minutes',price:'450'},
+              {description:'biryani',Image:'https://static.toiimg.com/thumb/69038542.cms?imgsize=563452&width=800&height=800',preptime:'18 minutes',price:'800'},]
+     
+     food.forEach(function(e){
+            let parent = document.getElementById('store')
+            let div = document.createElement('div')
+            let dishname = document.createElement('p')
+            let dishtime = document.createElement('p')
+            let dishprice = document.createElement('p')
+            let dishimg = document.createElement('img')
+            let button = document.createElement('button')
+            button.innerHTML = "Add to cart"
+            button.onclick = function(){
+                fav(e)
+            }
+            dishname.innerHTML = e.description
+            dishprice.innerHTML = e.price
+            dishtime.innerHTML = e.preptime
+            dishimg.src = e.Image
+            div.setAttribute('class','foodbox')
+            div.append(dishimg,dishname,dishtime,dishprice,button)
+            parent.append(div)
+     })
+     
+    
+     function fav(e)
+     {
+
+    
+
+         let cartitem = {
+          description: e.description,
+          Image: e.Image,
+          preptime: e.preptime,
+          price: e.price,
+        }
+      
+      
+      let cart = localStorage.getItem('cartitems')
+      
+      if(cart == null)
+        {
+            cart = []
+        }
+      else
+      {
+          cart = JSON.parse(localStorage.getItem('cartitems'))
+          for(let i = 0; i<cart.length; i++)
+             {
+                if( e.description==cart[i].description && e.Image==cart[i].Image && e.preptime==cart[i].preptime && e.price === cart[i].price )
+              {
+                  alert('This item is already added')
+                   return
+               }
+             }
+      }
+      cart.push(cartitem);
+      localStorage.setItem('cartitems',JSON.stringify(cart))
+      
+      }
+
+      function cart(){
+          window.location.href = './cart.html'
+      }
+</script>

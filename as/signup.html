@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: aliceblue;
+        }
+        .nav h1{
+            margin: 25px;
+        }
+        .list{
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+        }
+        .list li{
+            margin: 15px;
+            cursor: pointer;
+        }
+        .flex{
+            display: flex;
+            margin: 150px auto;
+            flex-direction: column;
+            width: 250px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+        }
+        #form label{
+            margin: 10px;
+        }
+        #form input{
+            margin: 10px;
+        }
+        
+        #form {
+            width: 250px;
+            flex-direction: column;
+            display: flex;}
+            button{
+            width: 100%;
+            padding: 5px 0;
+            color: black;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 255, 0.555);
+            font-size: large;
+            margin-bottom: 1px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Food*Food</h1>
+        <ul class="list">
+            <li onclick="menu()">Menu</li>
+            <li onclick="login()">Login</li>
+            <li onclick="signup()">Signup</li>
+        </ul>
+    </div>
+    <div class="flex">
+        <form onsubmit="return false" id="form">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name">
+        <label for="mobile">Moblie</label>
+        <input type="number" name="mobile" id="mobile" maxlength="10" minlength="10">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <button onclick="createuser()">signup</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+  function menu(){
+      window.location.href = './menu.html'
+  }
+  function login(){
+      window.location.href = './login.html'
+  }
+  function signup(){
+      window.location.href = './signup.html'
+  }
+  
+  function createuser(){
+      let form = document.getElementById('form')
+      let name = form.name.value
+      let mobile = form.mobile.value
+      let email = form.email.value
+      let password = form.password.value
+
+      form.reset();
+
+     if(name == '' || mobile == '' || email == '' || password == '' )
+       {
+           alert('please fill the form')
+           return
+       }
+      let fooduser = {
+          name,
+          mobile,
+          email,
+          password
+      }
+      
+
+      let arr = localStorage.getItem('foodusers')
+      
+      if(arr == null)
+        {
+            arr = []
+        }
+      else{
+          arr = JSON.parse(localStorage.getItem('foodusers'))
+          for(let i = 0; i<arr.length; i++)
+             {
+                if( mobile === arr[i].mobile || email === arr[i].email )
+              {
+                  alert('This user is already exist.')
+                   return
+               }
+             }
+      }
+      arr.push(fooduser)
+      localStorage.setItem('foodusers',JSON.stringify(arr))
+      alert('you are a member now')
+    
+  }
+
+</script>

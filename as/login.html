@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: aliceblue;
+        }
+        .nav h1{
+            margin: 25px;
+        }
+        .list{
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+        }
+        .list li{
+            margin: 15px;
+            cursor: pointer;
+        }
+        .flex{
+            display: flex;
+            margin: 150px auto;
+            flex-direction: column;
+            width: 250px;
+            box-shadow: 0 0 5px rgba(0,0,0,1);
+        }
+        button{
+            width: 100%;
+            padding: 5px 0;
+            margin-bottom: 1px;
+            color: black;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 255, 0.555);
+            font-size: large;
+            
+        }
+        #form label{
+            margin: 10px;
+        }
+        #form input{
+            margin: 10px;
+        }
+        
+        #form {
+            width: 250px;
+            flex-direction: column;
+            display: flex;}
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Food*Food</h1>
+        <ul class="list">
+            <li onclick="menu()">Menu</li>
+            <li onclick="login()">Login</li>
+            <li onclick="signup()">Signup</li>
+        </ul>
+    </div>
+    <div class="flex">
+        <form onsubmit="return false" id="form">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <button onclick="checkuser()">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+  function menu(){
+      window.location.href = './menu.html'
+  }
+  function login(){
+      window.location.href = './login.html'
+  }
+  function signup(){
+      window.location.href = './signup.html'
+  }
+  
+  function checkuser(){
+      let form = document.getElementById('form')
+      let email = form.email.value
+      let password = form.password.value
+
+      form.reset();
+
+     if( email == '' || password == '' )
+       {
+           alert('please fill the form')
+           return
+       }
+
+      arr = JSON.parse(localStorage.getItem('foodusers'))
+
+      for(let i = 0; i<arr.length; i++)
+             {
+                if( password === arr[i].password && email === arr[i].email )
+              {
+                  alert('you are logged in.')
+                  return
+               }
+             }
+     
+
+    
+  }
+
+</script>
